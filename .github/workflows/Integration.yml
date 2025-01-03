@@ -1,7 +1,7 @@
 # Workflow 이름
 name: Integration with Gradle
 
-#브랜치 지정
+# 브랜치 지정
 on:
   push:
     branches:
@@ -14,24 +14,31 @@ jobs:
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v3
+      with:
+        ref: develop  # develop 브랜치로 체크아웃
+    
     # Java Setting
     - name: Set up JDK 21
       uses: actions/setup-java@v3
       with:
         java-version: '21'
         distribution: 'temurin'
+    
     # gradlew 권한 부여
     - name: Grant gradlew
       run: chmod +x gradlew
+    
     # WAS Gradle 빌드
     - name: Build with Gradle
       run: ./gradlew build -x test
+    
     # 도커 이미지 빌드
     - name: Docker Build Image
       run: docker build -t commerce-was .
+    
     # 배포
     - name: Deploy Images with Docker Compose
-      uses: appleboy/ssh-action@master
+      uses: appleboy/ssh-action@v0.1.0  # `master` 대신 버전이나 안정적인 릴리스를 사용하세요
       env:
         APP: "Commerce"
         COMPOSE: "/DEPLOY/Commerce/docker-compose.yml"
