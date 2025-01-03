@@ -10,7 +10,7 @@ public class CommonController {
 	@RequestMapping("/v1")
 	public String githubActions() {
 		
-		String version = "v4";
+		String version = "v5";
 		return "success";
 	}
 }
