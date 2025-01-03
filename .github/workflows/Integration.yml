@@ -41,7 +41,7 @@ jobs:
       uses: appleboy/ssh-action@master
       env:
         APP: "Commerce"
-        COMPOSE: "/DEPLOY/Commerce/docker-compose.yml"
+        COMPOSE: "$GITHUB_WORKSPACE/docker-compose.yml"
       with:
         username: azureuser
         host: ${{ secrets.AZURE_HOST }}
