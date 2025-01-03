@@ -31,7 +31,7 @@ jobs:
       run: docker build -t commerce-was .
     # 배포
     - name: Deploy Images with Docker Compose
-      uses: appleboy/ssh-action@v0.1.0
+      uses: appleboy/ssh-action@master
       env:
         APP: "Commerce"
         COMPOSE: "/DEPLOY/Commerce/docker-compose.yml"
