@@ -35,13 +35,21 @@ jobs:
     # 도커 이미지 빌드
     - name: Docker Build Image
       run: docker build -t commerce-was .
+      
+    # Logging Workspace1
+    - name: Logging Workspace
+      run: ls ${{ github.workspace }}
+
+    # Logging Workspace2
+    - name: Logging Workspace
+      run: ls "/home/runner/work/Commerce/Commerce"
     
     # 배포
     - name: Deploy Images with Docker Compose
       uses: appleboy/ssh-action@master
       env:
         APP: "Commerce"
-        COMPOSE: "/home/runner/work/Commerce/Commerce/docker-compose.yml"
+        COMPOSE: "${{ github.workspace }}/docker-compose.yml"
       with:
         username: azureuser
         host: ${{ secrets.AZURE_HOST }}
