@@ -38,7 +38,7 @@ jobs:
     
     # 배포
     - name: Deploy Images with Docker Compose
-      uses: appleboy/ssh-action@v0.1.0  # `master` 대신 버전이나 안정적인 릴리스를 사용하세요
+      uses: appleboy/ssh-action@master
       env:
         APP: "Commerce"
         COMPOSE: "/DEPLOY/Commerce/docker-compose.yml"
