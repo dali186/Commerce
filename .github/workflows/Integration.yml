@@ -28,9 +28,6 @@ jobs:
     # 도커 이미지 빌드
     - name: Docker Build Image
       run: docker build -t commerce-was .
-    # docker-compose excute
-    - name: execute docker-compose
-      run: docker-compose up -d
     # 배포
     - name: Deploy Images with Docker Compose
       uses: appleboy/ssh-action@v0.1.0
