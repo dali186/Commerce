@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:latest
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: mysqladmin
+    ports:
+      - "3306:3306"
+    networks:
+      - was_net
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    restart: unless-stopped
+
+  commerce_was:
+    image: commerce_was:latest
+    container_name: commerce_was
+    ports:
+      - "8080:8080"
+    networks:
+      - was_net
+    depends_on:
+      - mysql
+    restart: unless-stopped
+
+networks:
+  was_net:
+    driver: bridge
+
+volumes:
+  mysql_data:
+    driver: local
