@@ -31,3 +31,23 @@ jobs:
     # docker-compose excute
     - name: execute docker-compose
       run: docker-compose up -d
+    # 배포
+    - name: Deploy Images with Docker Compose
+      uses: appleboy/ssh-action@v0.1.0
+      env:
+        APP: "Commerce"
+        COMPOSE: "/DEPLOY/Commerce/docker-compose.yml"
+      with:
+        username: azureuser
+        host: ${{ secrets.AZURE_HOST }}
+        key: ${{ secrets.AZURE_PRIVATE_KEY }}
+        envs: APP, COMPOSE
+        script_stop: true
+        script: |
+          echo "Stopping existing containers..."
+          sudo docker-compose -f $COMPOSE down
+          
+          echo "Starting containers with Docker Compose..."
+          sudo docker-compose -f $COMPOSE up -d
+          
+          echo "Deployment completed successfully."
